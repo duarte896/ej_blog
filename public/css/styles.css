@@ -1,1 +1,21 @@
 /* Colocar aquí CSS "propio" */
+#imagen-de-fondo {
+  background-image: url("../img/card\ 2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.altura-contenedor-header {
+  height: 533px;
+}
+.titulo-header h1 {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 80px;
+}
+.titulo-header small {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 24px;
+}
