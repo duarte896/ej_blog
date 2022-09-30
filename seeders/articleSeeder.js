@@ -6,7 +6,7 @@ faker.locale = "es";
 module.exports = async () => {
   const articles = [];
 
-  for (let i = 0; i < 3000; i++) {
+  for (let i = 0; i < 10; i++) {
     articles.push({
       title: faker.lorem.sentence(5),
       content: faker.lorem.paragraphs(),
