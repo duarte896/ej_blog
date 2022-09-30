@@ -20,11 +20,16 @@
         <div
           class="col d-flex flex-column justify-content-center align-items-center altura-contenedor-header text-white titulo-header"
         >
-          <h1>Hack the blog</h1>
+          <h1><%= article.title %></h1>
           <small>El Blog de Hack Academy</small>
         </div>
       </div>
     </div>
+    <section>
+      <div class="container py-5">
+        <p><%= article.content %></p>
+      </div>
+    </section>
 
     <%- include('./partials/footer') %>
   </body>
