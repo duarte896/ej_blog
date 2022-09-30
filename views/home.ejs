@@ -26,12 +26,14 @@
       </div>
     </div>
     <section id="SeccionMedia">
-      <div class="container">
+      <div class="container mt-4">
         <% for( article of allArticles){ %> 
         <div class="divArticuloHome">
-          <a class="tituloArticulo" href="">
-            <%= article.title %> 
-          </a>
+          <div>
+            <a class="tituloArticulo text-decoration-none" href="/articles/<%= article.id %>">
+              <%= article.title %> 
+            </a>
+          </div>
           <small class="fechaArticulo"> <%= article.createdAt %> </small>
           <hr />
         </div>
