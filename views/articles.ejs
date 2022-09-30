@@ -26,8 +26,13 @@
       </div>
     </div>
     <section>
-      <div class="container py-5">
-        <p><%= article.content %></p>
+      <div class="container d-flex flex-direction-row">
+        <div class="p-5">
+          <img src="<%= article.image %> " alt="" />
+        </div>
+        <div class="py-5">
+          <p><%= article.content %></p>
+        </div>
       </div>
     </section>
 
