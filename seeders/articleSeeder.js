@@ -10,6 +10,7 @@ module.exports = async () => {
     articles.push({
       title: faker.lorem.sentence(5),
       content: faker.lorem.paragraphs(),
+      userId: (Math.random() * 10).toFixed(),
     });
   }
 
