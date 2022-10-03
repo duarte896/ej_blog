@@ -1,10 +1,8 @@
 const express = require("express");
 const adminRouter = express.Router();
-// const adminControllers = 
+const pagesControllers = require('../controllers/pagesController')
 // Rutas del Admin:
 // ...
-adminRouter.get("/", (req, res) => {
-    res.render("admin");
-  });
+adminRouter.get("/", pagesControllers.showAdmin);
 
 module.exports = adminRouter;
