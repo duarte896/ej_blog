@@ -11,7 +11,10 @@ module.exports = async () => {
       title: faker.lorem.sentence(5),
       content: faker.lorem.paragraphs(),
       image: faker.image.imageUrl(),
-      userId: (Math.random() * 10).toFixed(),
+      userId: faker.datatype.number({
+        min: 1,
+        max: 10,
+      }),
     });
   }
 

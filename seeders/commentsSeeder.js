@@ -10,7 +10,14 @@ module.exports = async () => {
     comments.push({
       title: faker.lorem.sentence(5),
       content: faker.lorem.paragraphs(),
-      articleId: (Math.random() * 10).toFixed(),
+      articleId: faker.datatype.number({
+        min: 1,
+        max: 10,
+      }),
+      userId: faker.datatype.number({
+        min: 1,
+        max: 10,
+      }),
     });
   }
 
