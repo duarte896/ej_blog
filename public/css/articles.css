@@ -40,4 +40,13 @@
   #titulo-header {
     width: 30.625rem;
   }
+  #imagen-articulo {
+    height: 400px;
+    width: 31.25rem;
+  }
+}
+@media (max-width: 500px) {
+  .padding-left {
+    padding-left: 0;
+  }
 }
