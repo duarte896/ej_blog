@@ -35,7 +35,9 @@
               <%= article.title %>
             </a>
           </div>
-          <small class="fechaArticulo"> <%= article.createdAt %> </small>
+          <small class="fechaArticulo"
+            ><%= article.user.firstname %> <%= article.user.lastname %>, <%= article.createdAt %>
+          </small>
           <hr />
         </div>
         <% } %>

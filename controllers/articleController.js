@@ -1,17 +1,20 @@
-const { Article, User } = require("../models");
-
+const { Article, User, Comment } = require("../models");
 // Display a listing of the resource.
-async function index(req, res) {
-
-}
+async function index(req, res) {}
 
 // Display the specified resource.
 async function show(req, res) {
   //get article by id
   {
-    const results = await Article.findByPk(req.params.id);
+    const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
+    // const user = await User.findByPk(article.userId);
+    const comments = await Comment.findAll({ where: { articleId: req.params.id } });
+    console.log(comments);
+    // console.log(article.createdAt);
     res.render("articles", {
-      article: results,
+      article,
+      // user,
+      // comments,
     });
   }
 }

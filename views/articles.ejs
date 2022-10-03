@@ -20,7 +20,10 @@
         <div class="row">
           <div class="col-7 mx-auto text-white" id="titulo-header">
             <h1>Man must explore, and this is exploration at its greatest</h1>
-            <small>creado por Marty McFly el 24 de Setiembre, 2022</small>
+            <small
+              >creado por <%= article.user.firstname %> <%= article.user.lastname %> el <%=
+              article.createdAt %>
+            </small>
           </div>
         </div>
       </div>
@@ -33,6 +36,16 @@
         <div class="py-5">
           <p><%= article.content %></p>
         </div>
+      </div>
+    </section>
+    <section class="comments">
+      <div class="container">
+        <h2 class="text-center mb-5">Comments</h2>
+        <% for (const comment of article.comments) { %>
+        <div class="border p-5 mb-5">
+          <p><%= comment.content %></p>
+        </div>
+        <% } %>
       </div>
     </section>
 

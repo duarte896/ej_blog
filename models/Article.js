@@ -1,3 +1,5 @@
+const { DATEONLY, DATE } = require("sequelize");
+
 module.exports = (sequelize, Model, DataTypes) => {
   class Article extends Model {}
 
@@ -16,6 +18,12 @@ module.exports = (sequelize, Model, DataTypes) => {
       },
       image: {
         type: DataTypes.STRING,
+      },
+      createdAt: {
+        type: DATEONLY,
+      },
+      updatedAt: {
+        type: DATE,
       },
     },
     {
