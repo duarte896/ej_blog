@@ -5,6 +5,12 @@ const pagesController = require('../controllers/pagesController')
 // Rutas Públicas:
 publicRouter.get("/", pagesController.showHome);
 
+publicRouter.get("/articles/crear", function (req, res) {
+  res.render("createArticle")
+});
+
+publicRouter.post("/articles/crear", articleController.create);
+
 publicRouter.get("/articles/:id", articleController.show);
 
 

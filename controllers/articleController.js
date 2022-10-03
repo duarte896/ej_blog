@@ -17,7 +17,18 @@ async function show(req, res) {
 }
 
 // Show the form for creating a new resource
-async function create(req, res) {}
+async function create(req, res) {
+  await Article.create({
+    title: req.body.titulo,
+    content: req.body.conteindo,
+  })
+  await User.create({
+    firstname: req.body.firstName,
+    lastname: req.body.lastName,
+    email: req.body.email,
+  })
+  res.redirect("/admin");
+}
 
 // Store a newly created resource in storage.
 async function store(req, res) {}
