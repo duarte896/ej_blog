@@ -16,8 +16,13 @@
   <body>
     <%- include('partials/navbar'); %>
 
+    <section class="container text-center mt-4">
+      <h1>Crea un nuevo articulo <a href="/articles/crear" class="btn btn-primary">AQUI</a></h1>
+      
+    </section>
+
     <div class="container mt-4">
-      <h1>Articles</h1>
+      <h2>Articles</h2>
       <table class="table table-striped border">
         <thead>
           <tr>
@@ -40,7 +45,7 @@
             <td><%= article.createdAt %></td>
             <td><%= article.user.firstname%> <%= article.user.lastname%></td>
             <td>
-              <a href="" class="btn btn-primary mb-2">Editar</a>
+              <a href="/editar/<%= article.id %> " class="btn btn-primary mb-2">Editar</a>
               <a href="/eliminar/<%= article.id %>" class="btn btn-danger">Eliminar</a>
             </td>
           </tr>
@@ -48,6 +53,7 @@
         </tbody>
       </table>
     </div>
+    
 
     <%- include('partials/footer'); %>
 

@@ -27,6 +27,7 @@ async function create(req, res) {
     lastname: req.body.lastName,
     email: req.body.email,
   })
+ //Falta que el id del usuario quede en el articulo... 
   res.redirect("/admin");
 }
 
