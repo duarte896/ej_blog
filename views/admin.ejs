@@ -41,7 +41,7 @@
             <td><%= article.user.firstname%> <%= article.user.lastname%></td>
             <td>
               <a href="" class="btn btn-primary mb-2">Editar</a>
-              <a href="" class="btn btn-danger">Eliminar</a>
+              <a href="/eliminar/<%= article.id %>" class="btn btn-danger">Eliminar</a>
             </td>
           </tr>
           <% } %>

@@ -13,6 +13,6 @@ publicRouter.post("/articles/crear", articleController.create);
 
 publicRouter.get("/articles/:id", articleController.show);
 
-
+publicRouter.get("/eliminar/:id", articleController.destroy);
 
 module.exports = publicRouter;
