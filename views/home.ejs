@@ -27,16 +27,19 @@
       </div>
     </div>
     <section id="SeccionMedia">
-      <div class="container alineacion-articulos">
+      <div class="container mt-5">
         <% for( article of allArticles){ %>
         <div class="row">
-          <div class="col col-lg-9 mx-auto">
-            <a class="tituloArticulo text-decoration-none" href="/articles/<%= article.id %>">
+          <div class="col col-lg-9 mx-auto mb-2">
+            <a
+              class="tituloArticulo text-decoration-none content"
+              href="/articles/<%= article.id %>"
+            >
               <%= article.title %>
             </a>
+            <small class="fechaArticulo"> <%= article.createdAt %> </small>
+            <hr />
           </div>
-          <small class="fechaArticulo"> <%= article.createdAt %> </small>
-          <hr />
         </div>
         <% } %>
       </div>

@@ -16,10 +16,10 @@
   <body>
     <%- include('./partials/navbar') %>
     <div id="imagen-de-fondo">
-      <div class="container altura-contenedor-header">
+      <div class="container d-flex flex-column justify-content-center altura-contenedor-header">
         <div class="row">
-          <div class="col-7 mx-auto text-white" id="titulo-header">
-            <h1>Man must explore, and this is exploration at its greatest</h1>
+          <div class="col mx-auto text-white" id="titulo-header">
+            <h1><%= article.title %></h1>
             <small>creado por Marty McFly el 24 de Setiembre, 2022</small>
           </div>
         </div>

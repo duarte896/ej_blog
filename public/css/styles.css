@@ -19,11 +19,7 @@
   font-size: 24px;
   color: #ffffff;
 }
-.alineacion-articulos {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+
 .tituloArticulo {
   font-style: normal;
   font-weight: 800;
@@ -40,6 +36,9 @@
 .divArticuloHome {
   width: 80%;
   margin: auto;
+}
+.content {
+  display: block;
 }
 @media (max-width: 971px) {
   .titulo-header h1 {
