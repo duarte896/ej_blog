@@ -15,6 +15,7 @@
   </head>
   <body>
     <%- include('./partials/navbar') %>
+<<<<<<< HEAD
     <div id="imagen-de-fondo">
       <div class="container altura-contenedor-header">
         <div class="row">
@@ -22,9 +23,28 @@
             <h1>Man must explore, and this is exploration at its greatest</h1>
             <small>creado por Marty McFly el 24 de Setiembre, 2022</small>
           </div>
+=======
+    <div class="container-fluid altura-contenedor-header" id="imagen-de-fondo">
+      <div class="row">
+        <div
+          class="col d-flex flex-column justify-content-center align-items-center altura-contenedor-header text-white titulo-header"
+        >
+          <h1><%= article.title %></h1>
+          <small>El Blog de Hack Academy</small>
+>>>>>>> 7e615fa720905157b90f125562a9bbf82fbeea10
         </div>
       </div>
     </div>
+    <section>
+      <div class="container d-flex flex-direction-row">
+        <div class="p-5">
+          <img src="<%= article.image %> " alt="" />
+        </div>
+        <div class="py-5">
+          <p><%= article.content %></p>
+        </div>
+      </div>
+    </section>
 
     <%- include('./partials/footer') %>
   </body>

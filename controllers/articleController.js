@@ -1,10 +1,20 @@
-const { Article } = require("../models");
+const { Article, User } = require("../models");
 
 // Display a listing of the resource.
-async function index(req, res) {}
+async function index(req, res) {
+
+}
 
 // Display the specified resource.
-async function show(req, res) {}
+async function show(req, res) {
+  //get article by id
+  {
+    const results = await Article.findByPk(req.params.id);
+    res.render("articles", {
+      article: results,
+    });
+  }
+}
 
 // Show the form for creating a new resource
 async function create(req, res) {}

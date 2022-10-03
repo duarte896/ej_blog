@@ -27,6 +27,7 @@
       </div>
     </div>
     <section id="SeccionMedia">
+<<<<<<< HEAD
       <div class="container alineacion-articulos">
         <div class="row">
           <div class="col col-lg-9 mx-auto">
@@ -59,6 +60,20 @@
             <hr />
           </div>
         </div>
+=======
+      <div class="container mt-4">
+        <% for( article of allArticles){ %> 
+        <div class="divArticuloHome">
+          <div>
+            <a class="tituloArticulo text-decoration-none" href="/articles/<%= article.id %>">
+              <%= article.title %> 
+            </a>
+          </div>
+          <small class="fechaArticulo"> <%= article.createdAt %> </small>
+          <hr />
+        </div>
+        <% } %> 
+>>>>>>> 7e615fa720905157b90f125562a9bbf82fbeea10
       </div>
     </section>
     <%- include('./partials/footer') %>
