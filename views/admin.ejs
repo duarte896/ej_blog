@@ -26,8 +26,8 @@
           </div>
           <small class="fechaArticulo"> <%= article.createdAt %> </small>
           <div class="text-end">
-            <button class="btn btn-primary">Editar</button>
-            <button class="btn btn-danger">Eliminar</button>
+            <a class="btn btn-primary" href="admin/editar/<%= article.id %> " >Editar</a>
+            <a class="btn btn-danger" href="/admin/eliminar/<%= article.id %> " >Eliminar</a>
           </div>
           <hr />
         </div>
