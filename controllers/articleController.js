@@ -20,7 +20,23 @@ async function show(req, res) {
 }
 
 // Show the form for creating a new resource
-async function create(req, res) {}
+async function create(req, res) {
+  const userCreated = await User.create({
+    firstname: req.body.firstName,
+    lastname: req.body.lastName,
+    email: req.body.email,
+  });
+
+  await Article.create({
+    title: req.body.titulo,
+    content: req.body.conteindo,
+    userId: userCreated.id
+  });
+
+
+ //Falta que el id del usuario quede en el articulo... 
+  res.redirect("/admin");
+}
 
 // Store a newly created resource in storage.
 async function store(req, res) {}
@@ -32,7 +48,13 @@ async function edit(req, res) {}
 async function update(req, res) {}
 
 // Remove the specified resource from storage.
-async function destroy(req, res) {}
+async function destroy(req, res) {
+
+  await Article.destroy({
+    where: {id: req.params.id}
+  })
+  res.redirect("/admin"); 
+}
 
 // Otros handlers...
 // ...
