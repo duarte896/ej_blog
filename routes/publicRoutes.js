@@ -17,12 +17,10 @@ publicRouter.get("/articles/:id", articleController.show);
 publicRouter.get("/eliminar/:id", articleController.destroy);
 
 publicRouter.get('/editar/:id', async function(req, res){
-  const resultsArt = await Article.findByPk(req.params.id);
-  const resultsUsr = await User.findByPk(req.params.id);
+  const resultsArt = await Article.findByPk(req.params.id, {include: User});
   res.render('editArticle',{
-    resultsUsr,
     resultsArt,
   })
-})
+});
 
 module.exports = publicRouter;

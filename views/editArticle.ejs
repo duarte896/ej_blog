@@ -17,12 +17,12 @@
         <form method="post">
           <div class="mb-3">
             <label for="firstName" class="form-label">Nombre</label>
-            <input name="firstName" type="text" class="form-control" value="<%= resultsUsr.firstname %> " />
+            <input name="firstName" type="text" class="form-control" value="<%= resultsArt.user.firstname %> " />
           </div>
   
           <div class="mb-3">
             <label for="lastName" class="form-label">Apellido</label>
-            <input name="lastName" type="text" class="form-control" />
+            <input name="lastName" type="text" class="form-control" value="<%= resultsArt.user.lastname %>" />
           </div>
   
           <div class="mb-3">
@@ -33,18 +33,19 @@
               class="form-control"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
+              value="<%= resultsArt.user.email %>"
             />
             <div id="emailHelp" class="form-text"></div>
           </div>
   
           <div class="mb-3">
             <label for="titulo" class="form-label">Titulo</label>
-            <input name="titulo" type="text" class="form-control" />
+            <input name="titulo" type="text" class="form-control" value="<%= resultsArt.title %>"/>
           </div>
   
           <div class="mb-3">
             <label for="contenido" class="form-label">Contenido</label>
-            <input name="conteindo" type="text" class="form-control" />
+            <input name="conteindo" type="text" class="form-control" value="<%= resultsArt.content %>"/>
           </div>
   
           <button type="submit" class="btn btn-primary">Guardar</button>

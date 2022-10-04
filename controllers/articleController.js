@@ -18,15 +18,19 @@ async function show(req, res) {
 
 // Show the form for creating a new resource
 async function create(req, res) {
-  await Article.create({
-    title: req.body.titulo,
-    content: req.body.conteindo,
-  })
-  await User.create({
+  const userCreated = await User.create({
     firstname: req.body.firstName,
     lastname: req.body.lastName,
     email: req.body.email,
-  })
+  });
+
+  await Article.create({
+    title: req.body.titulo,
+    content: req.body.conteindo,
+    userId: userCreated.id
+  });
+
+
  //Falta que el id del usuario quede en el articulo... 
   res.redirect("/admin");
 }
