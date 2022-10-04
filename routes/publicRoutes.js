@@ -24,5 +24,5 @@ publicRouter.get('/editar/:id', async function(req, res){
     resultsArt,
   })
 });
-
+publicRouter.post('/editar/:id', articleController.edit)
 module.exports = publicRouter;
