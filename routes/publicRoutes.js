@@ -10,6 +10,8 @@ publicRouter.get("/articles/crear", function (req, res) {
   res.render("createArticle")
 });
 
+publicRouter.get("/articles/json", pagesController.showJson);
+
 publicRouter.post("/articles/crear", articleController.create);
 
 publicRouter.get("/articles/:id", articleController.show);
