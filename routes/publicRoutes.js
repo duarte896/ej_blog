@@ -28,4 +28,5 @@ publicRouter.get("/editar/:id", async function (req, res) {
 
 publicRouter.post("/articles/:id", commentController.create);
 
+publicRouter.post("/editar/:id", articleController.edit);
 module.exports = publicRouter;
