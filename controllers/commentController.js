@@ -1,3 +1,5 @@
+const { Article, User, Comment } = require("../models");
+
 // Display a listing of the resource.
 async function index(req, res) {}
 
@@ -5,7 +7,23 @@ async function index(req, res) {}
 async function show(req, res) {}
 
 // Show the form for creating a new resource
-async function create(req, res) {}
+async function create(req, res) {
+  console.log(req.params.id);
+  const userCreated = await User.create({
+    firstname: req.body.firstName,
+    lastname: req.body.lastName,
+    email: req.body.email,
+  });
+
+  await Comment.create({
+    content: req.body.content,
+    userId: userCreated.id,
+    articleId: req.params.id,
+  });
+
+  //Falta que el id del usuario quede en el articulo...
+  res.redirect(`/articles/${req.params.id}`);
+}
 
 // Store a newly created resource in storage.
 async function store(req, res) {}

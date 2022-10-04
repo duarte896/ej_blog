@@ -7,14 +7,14 @@ async function show(req, res) {
   //get article by id
   {
     const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
-    // const user = await User.findByPk(article.userId);
-    const comments = await Comment.findAll({ where: { articleId: req.params.id } });
-    //console.log(comments);
+
+    const comments = await Comment.findAll({ where: { articleId: req.params.id }, include: User });
+
     // console.log(article.createdAt);
     res.render("articles", {
       article,
       // user,
-      // comments,
+      comments,
     });
   }
 }
@@ -28,8 +28,8 @@ async function create(req, res) {
   });
 
   await Article.create({
-    title: req.body.titulo,
-    content: req.body.conteindo,
+    title: req.body.title,
+    content: req.body.content,
     userId: userCreated.id,
   });
 
@@ -42,26 +42,32 @@ async function store(req, res) {}
 
 // Show the form for editing the specified resource.
 async function edit(req, res) {
-  await Article.update({
-    title: req.body.titulo,
-    content: req.body.conteindo,
-  },{
-    where:{
-      id: req.params.id,
-    } 
-  });
+  await Article.update(
+    {
+      title: req.body.titulo,
+      content: req.body.conteindo,
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    },
+  );
 
   const articleEdit = await Article.findByPk(req.params.id);
 
-  await User.update({
-    firstname: req.body.firstName,
-    lastname: req.body.lastName,
-    email: req.body.email
-  },{
-    where:{
-      id: articleEdit.userId,
-    } 
-  });
+  await User.update(
+    {
+      firstname: req.body.firstName,
+      lastname: req.body.lastName,
+      email: req.body.email,
+    },
+    {
+      where: {
+        id: articleEdit.userId,
+      },
+    },
+  );
 
   res.redirect("/admin");
 }
