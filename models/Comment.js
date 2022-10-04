@@ -1,3 +1,5 @@
+const { DATEONLY, DATE } = require("sequelize");
+
 module.exports = (sequelize, Model, DataTypes) => {
   class Comment extends Model {}
 
@@ -8,6 +10,9 @@ module.exports = (sequelize, Model, DataTypes) => {
       },
       title: {
         type: DataTypes.STRING,
+      },
+      createdAt: {
+        type: DATEONLY,
       },
     },
     {

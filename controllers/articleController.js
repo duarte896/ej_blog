@@ -7,14 +7,14 @@ async function show(req, res) {
   //get article by id
   {
     const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
-    // const user = await User.findByPk(article.userId);
-    const comments = await Comment.findAll({ where: { articleId: req.params.id } });
-    console.log(comments);
+
+    const comments = await Comment.findAll({ where: { articleId: req.params.id }, include: User });
+
     // console.log(article.createdAt);
     res.render("articles", {
       article,
       // user,
-      // comments,
+      comments,
     });
   }
 }
@@ -28,13 +28,12 @@ async function create(req, res) {
   });
 
   await Article.create({
-    title: req.body.titulo,
-    content: req.body.conteindo,
-    userId: userCreated.id
+    title: req.body.title,
+    content: req.body.content,
+    userId: userCreated.id,
   });
 
-
- //Falta que el id del usuario quede en el articulo... 
+  //Falta que el id del usuario quede en el articulo...
   res.redirect("/admin");
 }
 
@@ -49,11 +48,10 @@ async function update(req, res) {}
 
 // Remove the specified resource from storage.
 async function destroy(req, res) {
-
   await Article.destroy({
-    where: {id: req.params.id}
-  })
-  res.redirect("/admin"); 
+    where: { id: req.params.id },
+  });
+  res.redirect("/admin");
 }
 
 // Otros handlers...
