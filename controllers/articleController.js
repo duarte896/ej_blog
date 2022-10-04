@@ -9,7 +9,7 @@ async function show(req, res) {
     const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
     // const user = await User.findByPk(article.userId);
     const comments = await Comment.findAll({ where: { articleId: req.params.id } });
-    console.log(comments);
+    //console.log(comments);
     // console.log(article.createdAt);
     res.render("articles", {
       article,
@@ -30,11 +30,10 @@ async function create(req, res) {
   await Article.create({
     title: req.body.titulo,
     content: req.body.conteindo,
-    userId: userCreated.id
+    userId: userCreated.id,
   });
 
-
- //Falta que el id del usuario quede en el articulo... 
+  //Falta que el id del usuario quede en el articulo...
   res.redirect("/admin");
 }
 
@@ -49,11 +48,10 @@ async function update(req, res) {}
 
 // Remove the specified resource from storage.
 async function destroy(req, res) {
-
   await Article.destroy({
-    where: {id: req.params.id}
-  })
-  res.redirect("/admin"); 
+    where: { id: req.params.id },
+  });
+  res.redirect("/admin");
 }
 
 // Otros handlers...
