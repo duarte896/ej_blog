@@ -1,4 +1,5 @@
 const { Article, User, Comment } = require("../models");
+const formidable = require("formidable");
 // Display a listing of the resource.
 async function index(req, res) {}
 
@@ -21,12 +22,28 @@ async function show(req, res) {
 
 // Show the form for creating a new resource
 async function create(req, res) {
-  const userCreated = await User.create({
-    firstname: req.body.firstName,
-    lastname: req.body.lastName,
-    email: req.body.email,
+  const form = formidable({
+    multiples: true,
+    uploadDir: __dirname + "/../public/img",
+    keepExtensions: true,
   });
 
+<<<<<<< HEAD
+  form.parse(req, async (err, fields, files) => {
+    const userCreated = await User.create({
+      firstname: fields.firstName,
+      lastname: fields.lastName,
+      email: fields.email,
+    });
+
+    await Article.create({
+      title: fields.titulo,
+      content: fields.conteindo,
+      userId: userCreated.id,
+    });
+    res.json(files);
+  });
+=======
   await Article.create({
     title: req.body.title,
     content: req.body.content,
@@ -35,6 +52,7 @@ async function create(req, res) {
 
   //Falta que el id del usuario quede en el articulo...
   res.redirect("/admin");
+>>>>>>> d79d9ddbbb02bbbf5fc2483f4c2d3b5056a0406f
 }
 
 // Store a newly created resource in storage.
