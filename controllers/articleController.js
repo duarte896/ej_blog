@@ -28,7 +28,6 @@ async function create(req, res) {
     keepExtensions: true,
   });
 
-<<<<<<< HEAD
   form.parse(req, async (err, fields, files) => {
     const userCreated = await User.create({
       firstname: fields.firstName,
@@ -37,22 +36,14 @@ async function create(req, res) {
     });
 
     await Article.create({
-      title: fields.titulo,
-      content: fields.conteindo,
+      title: fields.title,
+      content: fields.content,
       userId: userCreated.id,
+      image: files.image.newFilename,
     });
-    res.json(files);
-  });
-=======
-  await Article.create({
-    title: req.body.title,
-    content: req.body.content,
-    userId: userCreated.id,
-  });
 
-  //Falta que el id del usuario quede en el articulo...
-  res.redirect("/admin");
->>>>>>> d79d9ddbbb02bbbf5fc2483f4c2d3b5056a0406f
+    await res.redirect("/admin");
+  });
 }
 
 // Store a newly created resource in storage.
