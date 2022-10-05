@@ -17,9 +17,9 @@
     <%- include('./partials/navbar') %>
     <div id="imagen-de-fondo">
       <div class="container altura-contenedor-header">
-        <div class="row">
-          <div class="col-7 mx-auto text-white" id="titulo-header">
-            <h1>Man must explore, and this is exploration at its greatest</h1>
+        <div class="row mx-auto">
+          <div class="col text-white" id="titulo-header">
+            <h1><%= article.title %></h1>
             <small
               >creado por <%= article.user.firstname %> <%= article.user.lastname %> el <%=
               article.createdAt %>
@@ -42,11 +42,57 @@
     </section>
     <section class="comments">
       <div class="container">
-        <h2 class="text-center mb-5">Comments</h2>
-        <% for (const comment of article.comments) { %>
+        <h2 class="text-center mb-5">Add new comments</h2>
+        <div class="border p-5 mb-5">
+          <form action="/articles/<%= article.id %> " method="post">
+            <div class="mb-3">
+              <label for="firstName" class="form-label">Nombre</label>
+              <input name="firstName" type="text" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label for="lastName" class="form-label">Apellido</label>
+              <input name="lastName" type="text" class="form-control" />
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input
+                name="email"
+                type="email"
+                class="form-control"
+                id="exampleInputEmail1"
+                aria-describedby="emailHelp"
+              />
+              <div id="emailHelp" class="form-text"></div>
+            </div>
+
+            <div class="form-floating mb-5">
+              <textarea
+                name="content"
+                class="form-control"
+                placeholder="Leave a comment here"
+                id="floatingTextarea2"
+                style="height: 100px"
+              ></textarea>
+              <label for="floatingTextarea2"></label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Guardar</button>
+          </form>
+        </div>
+        <h2 class="text-center mb-5">Comments (<%= comments.length %>)</h2>
+        <% for (const comment of comments) { %>
         <div class="border p-5 mb-5">
           <p><%= comment.content %></p>
+          <div class="border-top">
+            <p class="d-flex justify-content-between p-2">
+              <%= comment.user.firstname %> <%= comment.user.lastname%>
+              <small><%= comment.createdAt %> </small>
+            </p>
+          </div>
         </div>
+
         <% } %>
       </div>
     </section>
