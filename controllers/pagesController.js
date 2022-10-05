@@ -21,7 +21,8 @@ async function showAboutUs(req, res) {
 async function showAdmin(req, res) {
   const allArticles = await Article.findAll({ include: User });
   if (req.isAuthenticated()) {
-    res.render("admin", { allArticles });
+    console.log(allArticles.article);
+    res.render("admin", { allArticles, req });
   } else {
     res.redirect("/login");
   }

@@ -35,7 +35,7 @@
           </tr>
         </thead>
         <tbody>
-          <% for( article of allArticles){ %>
+          <% for( article of allArticles){if(article.user.email===req.user.email){ %>
           <tr>
             <th scope="row"><%= article.id %></th>
             <td><%= article.title %></td>
@@ -48,7 +48,7 @@
               <a href="/eliminar/<%= article.id %>" class="btn btn-danger">Eliminar</a>
             </td>
           </tr>
-          <% } %>
+          <% } }%>
         </tbody>
       </table>
     </div>
