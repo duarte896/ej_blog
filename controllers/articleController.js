@@ -41,8 +41,6 @@ async function create(req, res) {
       userId: userCreated.id,
       image: files.image.newFilename,
     });
-
-    await res.redirect("/admin");
   });
 }
 
@@ -89,7 +87,11 @@ async function destroy(req, res) {
   await Article.destroy({
     where: { id: req.params.id },
   });
-  res.redirect("/admin");
+  if (req.isAuthenticated()) {
+    res.redirect("/admin");
+  } else {
+    res.redirect("/login");
+  }
 }
 
 // Otros handlers...

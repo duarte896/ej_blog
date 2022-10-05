@@ -9,7 +9,11 @@ const { Article, User } = require("../models");
 publicRouter.get("/", pagesController.showHome);
 
 publicRouter.get("/articles/crear", function (req, res) {
-  res.render("createArticle");
+  if (req.isAuthenticated()) {
+    res.render("createArticle");
+  } else {
+    res.redirect("/login");
+  }
 });
 
 publicRouter.get("/articles/json", pagesController.showJson);
@@ -22,9 +26,13 @@ publicRouter.get("/eliminar/:id", articleController.destroy);
 
 publicRouter.get("/editar/:id", async function (req, res) {
   const resultsArt = await Article.findByPk(req.params.id, { include: User });
-  res.render("editArticle", {
-    resultsArt,
-  });
+  if (req.isAuthenticated()) {
+    res.render("editArticle", {
+      resultsArt,
+    });
+  } else {
+    res.redirect("/login");
+  }
 });
 
 publicRouter.post("/articles/:id", commentController.create);
