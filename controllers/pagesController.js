@@ -20,7 +20,11 @@ async function showAboutUs(req, res) {
 
 async function showAdmin(req, res) {
   const allArticles = await Article.findAll({ include: User });
-  res.render("admin", { allArticles });
+  if (req.isAuthenticated()) {
+    res.render("admin", { allArticles });
+  } else {
+    res.redirect("/login");
+  }
 }
 
 // Otros handlers...
