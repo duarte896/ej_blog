@@ -8,34 +8,8 @@ const { Article, User } = require("../models");
 // Rutas Públicas:
 publicRouter.get("/", pagesController.showHome);
 
-publicRouter.get("/articles/crear", function (req, res) {
-  if (req.isAuthenticated()) {
-    res.render("createArticle");
-  } else {
-    res.redirect("/login");
-  }
-});
-
 publicRouter.get("/articles/json", pagesController.showJson);
-
-publicRouter.post("/articles/crear", articleController.create);
 
 publicRouter.get("/articles/:id", articleController.show);
 
-publicRouter.get("/eliminar/:id", articleController.destroy);
-
-publicRouter.get("/editar/:id", async function (req, res) {
-  const resultsArt = await Article.findByPk(req.params.id, { include: User });
-  if (req.isAuthenticated()) {
-    res.render("editArticle", {
-      resultsArt,
-    });
-  } else {
-    res.redirect("/login");
-  }
-});
-
-publicRouter.post("/articles/:id", commentController.create);
-
-publicRouter.post("/editar/:id", articleController.edit);
 module.exports = publicRouter;

@@ -10,6 +10,8 @@ const app = express();
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
+const ensureAuthenticated = require("./middlewares/ensureAuthenticated");
+const bcrypt = require("bcrypt");
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -30,24 +32,19 @@ passport.use(
     let user;
 
     try {
-      // 1. Encontrar al usuario que se está tratando de autenticar
       user = await User.findOne({ where: { email: username } });
     } catch (error) {
-      // 2. Hubo algun error al hacerlo? Retornemos ese error
       return done(error);
     }
 
-    // 3. Pudiste encontrar un usuario? Si no pudiste, retornemos esa info
     if (!user) {
       return done(null, false, { message: "Credenciales incorrectas" });
     }
 
-    // 4. Pudiste validar su contraseña? Si no pudiste, retornemos esa info
     if (password !== user.password) {
       return done(null, false, { message: "Credenciales incorrectas" });
     }
 
-    // 5. Este usuario es quien dice ser. Vamos a autenticar su acceso :)
     return done(null, user);
   }),
 );
@@ -65,8 +62,6 @@ passport.deserializeUser(function (id, done) {
       done(error, user);
     });
 });
-
-routes(app);
 
 dbInitialSetup();
 
@@ -87,22 +82,17 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
+  const passwordHasheada = await bcrypt.hash(req.body.password, 10);
   const newUser = await User.create({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
-    password: req.body.password,
+    password: passwordHasheada,
   });
   res.redirect("/admin");
 });
 
-// app.get("/admin", function (req, res) {
-//   if (req.isAuthenticated()) {
-//     res.send(`Te damos la bienvenida, ${req.user.firstname}!!`);
-//   } else {
-//     res.redirect("/login");
-//   }
-// });
+routes(app);
 
 app.listen(APP_PORT, () => {
   console.log(`\n[Express] Servidor corriendo en el puerto ${APP_PORT}.`);
