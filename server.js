@@ -5,6 +5,7 @@ const routes = require("./routes");
 const dbInitialSetup = require("./dbInitialSetup");
 const APP_PORT = process.env.APP_PORT || 3000;
 const { User } = require("./models/index");
+const bcrypt = require("bcryptjs");
 const app = express();
 
 const session = require("express-session");
@@ -30,24 +31,17 @@ passport.use(
     let user;
 
     try {
-      // 1. Encontrar al usuario que se está tratando de autenticar
       user = await User.findOne({ where: { email: username } });
     } catch (error) {
-      // 2. Hubo algun error al hacerlo? Retornemos ese error
       return done(error);
     }
-
-    // 3. Pudiste encontrar un usuario? Si no pudiste, retornemos esa info
     if (!user) {
       return done(null, false, { message: "Credenciales incorrectas" });
     }
-
-    // 4. Pudiste validar su contraseña? Si no pudiste, retornemos esa info
-    if (password !== user.password) {
+    const chequeoPassword = bcrypt.compare(password, user.password);
+    if (!chequeoPassword) {
       return done(null, false, { message: "Credenciales incorrectas" });
     }
-
-    // 5. Este usuario es quien dice ser. Vamos a autenticar su acceso :)
     return done(null, user);
   }),
 );
@@ -56,14 +50,16 @@ passport.serializeUser(function (user, done) {
   done(null, user.id);
 });
 
-passport.deserializeUser(function (id, done) {
-  User.findByPk(id)
-    .then((user) => {
-      done(null, user); // req.user
-    })
-    .catch(() => {
-      done(error, user);
-    });
+passport.deserializeUser(async function (id, done) {
+  try {
+    let user = await User.findByPk(id);
+    if (!user) {
+      return done(new Error("user not found"));
+    }
+    done(null, user);
+  } catch (error) {
+    done(error);
+  }
 });
 
 routes(app);
@@ -79,30 +75,50 @@ app.post(
   passport.authenticate("local", {
     successRedirect: "/admin",
     failureRedirect: "/login",
+    failureFlash: true,
   }),
 );
+// const usuario = await User.findOne({ where: { email: req.body.email } });
+// const passwordIngresado = req.body.password;
+// const hashAlmacenado = usuario.password;
+// const chequeoPassword = bcrypt.compare(passwordIngresado, hashAlmacenado);
+// if (chequeoPassword === true) {
+//   res.redirect("/admin");
+// } else {
+//   res.redirect("/login");
+// }
 
 app.get("/register", (req, res) => {
   res.render("register");
 });
 
 app.post("/register", async (req, res) => {
+  const passwordParaHashear = req.body.password;
+  const passwordHasheado = await bcrypt.hash(passwordParaHashear, 10);
+
   const newUser = await User.create({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
-    password: req.body.password,
+    password: passwordHasheado,
   });
-  res.redirect("/admin");
+  if (newUser.id !== null) {
+    req.login(newUser, () => {
+      res.redirect("/admin");
+    });
+  } else {
+    res.redirect("/register");
+  }
 });
 
-// app.get("/admin", function (req, res) {
-//   if (req.isAuthenticated()) {
-//     res.send(`Te damos la bienvenida, ${req.user.firstname}!!`);
-//   } else {
-//     res.redirect("/login");
-//   }
-// });
+app.get("/logout", function (req, res, next) {
+  req.logOut(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
 
 app.listen(APP_PORT, () => {
   console.log(`\n[Express] Servidor corriendo en el puerto ${APP_PORT}.`);

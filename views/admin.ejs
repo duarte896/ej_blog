@@ -14,7 +14,19 @@
     <title>Admin</title>
   </head>
   <body>
-    <%- include('partials/navbar'); %>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container">
+        <a class="navbar-brand" href="/">Hack the blog</a>
+        <div class="" id="">
+          <button type="button" class="btn btn-primary">
+            <a class="text-decoration-none" style="color: white" href="/">Home</a>
+          </button>
+          <button type="button" class="btn btn-danger">
+            <a class="text-decoration-none" style="color: white" href="/logout">Logout</a>
+          </button>
+        </div>
+      </div>
+    </nav>
 
     <section class="container text-center mt-4">
       <h1>Crea un nuevo articulo <a href="/articles/crear" class="btn btn-primary">AQUI</a></h1>
