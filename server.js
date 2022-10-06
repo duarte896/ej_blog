@@ -93,14 +93,11 @@ app.get("/register", (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const passwordParaHashear = req.body.password;
-  const passwordHasheado = await bcrypt.hash(passwordParaHashear, 10);
-
   const newUser = await User.create({
     firstname: req.body.firstname,
     lastname: req.body.lastname,
     email: req.body.email,
-    password: passwordHasheado,
+    password: req.body.password,
   });
   if (newUser.id !== null) {
     req.login(newUser, () => {
