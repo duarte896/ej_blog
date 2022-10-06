@@ -4,6 +4,7 @@ const makeUserAvailable = require("../middlewares/makeUserAvailable");
 
 module.exports = (app) => {
   app.use(makeUserAvailable);
-  app.use(adminRoutes);
+
   app.use(publicRoutes);
+  app.use(adminRoutes);
 };

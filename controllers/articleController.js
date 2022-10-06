@@ -38,7 +38,7 @@ async function create(req, res) {
     await Article.create({
       title: fields.title,
       content: fields.content,
-      userId: userCreated.id,
+      userId: req.user.id,
       image: files.image.newFilename,
     });
   });

@@ -10,16 +10,16 @@ const { Article, User } = require("../models");
 adminRouter.use(ensureAuthenticated);
 adminRouter.get("/admin", pagesControllers.showAdmin);
 
-adminRouter.get("/editar/:id", articleController.editArticle);
+adminRouter.get("/admin/editar/:id", articleController.editArticle);
 
-adminRouter.get("/eliminar/:id", articleController.destroy);
+adminRouter.get("/admin/eliminar/:id", articleController.destroy);
 
-adminRouter.post("/articles/crear", articleController.create);
+adminRouter.post("/admin/articles/crear", articleController.create);
 
-adminRouter.post("/articles/:id", commentController.create);
+adminRouter.post("/admin/articles/:id", commentController.create);
 
-adminRouter.post("/editar/:id", articleController.edit);
+adminRouter.post("/admin/editar/:id", articleController.edit);
 
-adminRouter.get("/articles/crear", articleController.createArticle);
+adminRouter.get("/admin/articles/crear", articleController.createArticle);
 
 module.exports = adminRouter;
