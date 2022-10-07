@@ -1,4 +1,6 @@
 const { Article, User } = require("../models");
+const { format } = require("date-fns");
+const spanishLocale = require("date-fns/locale/es");
 
 const { application } = require("express");
 async function showHome(req, res) {
@@ -22,7 +24,7 @@ async function showAboutUs(req, res) {
 async function showAdmin(req, res) {
   const allArticles = await Article.findAll({ include: User });
 
-  res.render("admin", { allArticles, req });
+  res.render("admin", { allArticles, req, format, spanishLocale });
 }
 
 // Otros handlers...

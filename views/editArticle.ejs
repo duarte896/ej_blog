@@ -21,7 +21,7 @@
             name="firstName"
             type="text"
             class="form-control"
-            value="<%= resultsArt.user.firstname %> "
+            value="<%= article.user.firstname %> "
           />
         </div>
 
@@ -31,7 +31,7 @@
             name="lastName"
             type="text"
             class="form-control"
-            value="<%= resultsArt.user.lastname %>"
+            value="<%= article.user.lastname %>"
           />
         </div>
 
@@ -43,24 +43,19 @@
             class="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            value="<%= resultsArt.user.email %>"
+            value="<%= article.user.email %>"
           />
           <div id="emailHelp" class="form-text"></div>
         </div>
 
         <div class="mb-3">
           <label for="titulo" class="form-label">Titulo</label>
-          <input name="titulo" type="text" class="form-control" value="<%= resultsArt.title %>" />
+          <input name="titulo" type="text" class="form-control" value="<%= article.title %>" />
         </div>
 
         <div class="mb-3">
           <label for="contenido" class="form-label">Contenido</label>
-          <input
-            name="conteindo"
-            type="text"
-            class="form-control"
-            value="<%= resultsArt.content %>"
-          />
+          <input name="conteindo" type="text" class="form-control" value="<%= article.content %>" />
         </div>
 
         <button type="submit" class="btn btn-primary">Guardar</button>
