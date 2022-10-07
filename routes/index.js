@@ -6,5 +6,5 @@ module.exports = (app) => {
   app.use(makeUserAvailable);
 
   app.use(publicRoutes);
-  app.use(adminRoutes);
+  app.use("/admin", adminRoutes);
 };

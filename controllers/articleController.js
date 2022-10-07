@@ -1,5 +1,6 @@
 const { Article, User, Comment } = require("../models");
 const formidable = require("formidable");
+
 // Display a listing of the resource.
 async function index(req, res) {}
 
@@ -36,7 +37,7 @@ async function create(req, res) {
       image: files.image.newFilename,
     });
   });
-  res.redirect("/admin");
+  await res.redirect("/admin");
 }
 
 // Store a newly created resource in storage.
@@ -80,10 +81,16 @@ async function createArticle(req, res) {
 }
 
 async function editArticle(req, res) {
-  const resultsArt = await Article.findByPk(req.params.id, { include: User });
+  const userId = req.user.dataValues.id;
+  const article = await Article.findByPk(req.params.id, { include: "user" });
+
+  console.log(article.user.id);
+  if (userId !== article.user.id) {
+    return res.redirect("/admin");
+  }
 
   res.render("editArticle", {
-    resultsArt,
+    article,
   });
 }
 // Remove the specified resource from storage.
