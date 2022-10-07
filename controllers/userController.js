@@ -9,6 +9,10 @@ async function show(req, res) {
   res.render("register", { userName });
 }
 
+async function showLogin(req, res) {
+  res.render("login");
+}
+
 // Show the form for creating a new resource
 async function create(req, res) {
   const userAuthentication = await User.findOne({
@@ -31,6 +35,15 @@ async function create(req, res) {
     req.flash("user", "Este usuario ya existe.");
     res.redirect("back");
   }
+}
+
+async function logout(req, res) {
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 }
 
 // Store a newly created resource in storage.
@@ -56,4 +69,6 @@ module.exports = {
   edit,
   update,
   destroy,
+  showLogin,
+  logout,
 };

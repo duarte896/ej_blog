@@ -4,14 +4,12 @@ const express = require("express");
 const routes = require("./routes");
 const dbInitialSetup = require("./dbInitialSetup");
 const APP_PORT = process.env.APP_PORT || 3000;
-const { User } = require("./models/index");
-const bcrypt = require("bcryptjs");
 const flash = require("connect-flash");
 const session = require("express-session");
-const passport = require("passport");
-const LocalStrategy = require("passport-local");
-const ensureAuthenticated = require("./middlewares/ensureAuthenticated");
+const passport = require("./config/passport");
 const app = express();
+
+passport(app);
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -27,77 +25,9 @@ app.use(
 
 app.use(flash());
 
-app.use(passport.session());
-
-passport.use(
-  new LocalStrategy({ usernameField: "email" }, async function (username, password, done) {
-    let user;
-
-    try {
-      user = await User.findOne({ where: { email: username } });
-    } catch (error) {
-      return done(error);
-    }
-    if (!user) {
-      return done(null, false, { message: "Credenciales incorrectas" });
-    }
-    const chequeoPassword = await bcrypt.compare(password, user.password);
-    if (!chequeoPassword) {
-      return done(null, false, { message: "Credenciales incorrectas" });
-    }
-    return done(null, user);
-  }),
-);
-
-passport.serializeUser(function (user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(async function (id, done) {
-  try {
-    let user = await User.findByPk(id);
-    if (!user) {
-      return done(new Error("user not found"));
-    }
-    done(null, user);
-  } catch (error) {
-    done(error);
-  }
-});
-
 // dbInitialSetup();
 
-app.get("/login", function (req, res) {
-  res.render("login");
-});
-
-app.post(
-  "/login",
-  passport.authenticate("local", {
-    successRedirect: "/admin",
-    failureRedirect: "/login",
-    // failureFlash: true,
-  }),
-);
-// const usuario = await User.findOne({ where: { email: req.body.email } });
-// const passwordIngresado = req.body.password;
-// const hashAlmacenado = usuario.password;
-// const chequeoPassword = bcrypt.compare(passwordIngresado, hashAlmacenado);
-// if (chequeoPassword === true) {
-//   res.redirect("/admin");
-// } else {
-//   res.redirect("/login");
-// }
-
 routes(app);
-app.get("/logout", function (req, res, next) {
-  req.logOut(function (err) {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/");
-  });
-});
 
 app.listen(APP_PORT, () => {
   console.log(`\n[Express] Servidor corriendo en el puerto ${APP_PORT}.`);
