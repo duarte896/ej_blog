@@ -42,26 +42,32 @@ async function store(req, res) {}
 
 // Show the form for editing the specified resource.
 async function edit(req, res) {
-  await Article.update({
-    title: req.body.titulo,
-    content: req.body.conteindo,
-  },{
-    where:{
-      id: req.params.id,
-    } 
-  });
+  await Article.update(
+    {
+      title: req.body.titulo,
+      content: req.body.conteindo,
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    },
+  );
 
   const articleEdit = await Article.findByPk(req.params.id);
 
-  await User.update({
-    firstname: req.body.firstName,
-    lastname: req.body.lastName,
-    email: req.body.email
-  },{
-    where:{
-      id: articleEdit.userId,
-    } 
-  });
+  await User.update(
+    {
+      firstname: req.body.firstName,
+      lastname: req.body.lastName,
+      email: req.body.email,
+    },
+    {
+      where: {
+        id: articleEdit.userId,
+      },
+    },
+  );
 
   res.redirect("/admin");
 }
