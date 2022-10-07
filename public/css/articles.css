@@ -14,6 +14,7 @@
   font-weight: 800;
   font-size: 48px;
 }
+
 .altura-contenedor-header {
   height: 533px;
   display: flex;
@@ -49,4 +50,7 @@
   .padding-left {
     padding-left: 0;
   }
+}
+.hide {
+  display: none;
 }

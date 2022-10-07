@@ -1,40 +1,47 @@
 const { Article, User, Comment } = require("../models");
+const formidable = require("formidable");
 // Display a listing of the resource.
 async function index(req, res) {}
 
 // Display the specified resource.
 async function show(req, res) {
   //get article by id
-  {
-    const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
 
-    const comments = await Comment.findAll({ where: { articleId: req.params.id }, include: User });
+  const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
 
-    // console.log(article.createdAt);
-    res.render("articles", {
-      article,
-      // user,
-      comments,
-    });
-  }
+  const comments = await Comment.findAll({ where: { articleId: req.params.id }, include: User });
+
+  // console.log(article.createdAt);
+  res.render("articles", {
+    article,
+    // user,
+    comments,
+    req,
+  });
 }
 
 // Show the form for creating a new resource
 async function create(req, res) {
-  const userCreated = await User.create({
-    firstname: req.body.firstName,
-    lastname: req.body.lastName,
-    email: req.body.email,
+  const form = formidable({
+    multiples: true,
+    uploadDir: __dirname + "/../public/img",
+    keepExtensions: true,
   });
 
-  await Article.create({
-    title: req.body.title,
-    content: req.body.content,
-    userId: userCreated.id,
-  });
+  form.parse(req, async (err, fields, files) => {
+    const userCreated = await User.create({
+      firstname: fields.firstName,
+      lastname: fields.lastName,
+      email: fields.email,
+    });
 
-  //Falta que el id del usuario quede en el articulo...
-  res.redirect("/admin");
+    await Article.create({
+      title: fields.title,
+      content: fields.content,
+      userId: req.user.id,
+      image: files.image.newFilename,
+    });
+  });
 }
 
 // Store a newly created resource in storage.
@@ -73,8 +80,17 @@ async function edit(req, res) {
 }
 
 // Update the specified resource in storage.
-async function update(req, res) {}
+async function createArticle(req, res) {
+  return res.render("createArticle");
+}
 
+async function editArticle(req, res) {
+  const resultsArt = await Article.findByPk(req.params.id, { include: User });
+
+  res.render("editArticle", {
+    resultsArt,
+  });
+}
 // Remove the specified resource from storage.
 async function destroy(req, res) {
   await Article.destroy({
@@ -90,8 +106,9 @@ module.exports = {
   index,
   show,
   create,
+  createArticle,
   store,
   edit,
-  update,
   destroy,
+  editArticle,
 };

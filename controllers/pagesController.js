@@ -1,8 +1,9 @@
 const { Article, User } = require("../models");
 
+const { application } = require("express");
 async function showHome(req, res) {
   const allArticles = await Article.findAll({ include: User });
-  res.render("home", { allArticles });
+  res.render("home", { allArticles, req });
 }
 
 async function showJson(req, res) {
@@ -20,7 +21,8 @@ async function showAboutUs(req, res) {
 
 async function showAdmin(req, res) {
   const allArticles = await Article.findAll({ include: User });
-  res.render("admin", { allArticles });
+
+  res.render("admin", { allArticles, req });
 }
 
 // Otros handlers...

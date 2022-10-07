@@ -13,9 +13,8 @@
     />
   </head>
   <body>
-
     <div class="container mt-4">
-      <form method="post">
+      <form method="post" enctype="multipart/form-data">
         <div class="mb-3">
           <label for="firstName" class="form-label">Nombre</label>
           <input name="firstName" type="text" class="form-control" />
@@ -48,8 +47,13 @@
           <input name="content" type="text" class="form-control" />
         </div>
 
+        <div class="mb-3">
+          <label for="image" class="form-label">Imagen</label>
+          <input name="image" type="file" class="form-control" />
+        </div>
+
         <button type="submit" class="btn btn-primary">Guardar</button>
-        <a href="/" class="btn btn-secondary">Volver</a>
+        <a href="/admin" class="btn btn-secondary">Volver</a>
       </form>
     </div>
 
