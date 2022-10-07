@@ -29,12 +29,6 @@ async function create(req, res) {
   });
 
   form.parse(req, async (err, fields, files) => {
-    const userCreated = await User.create({
-      firstname: fields.firstName,
-      lastname: fields.lastName,
-      email: fields.email,
-    });
-
     await Article.create({
       title: fields.title,
       content: fields.content,
@@ -42,6 +36,7 @@ async function create(req, res) {
       image: files.image.newFilename,
     });
   });
+  res.redirect("/admin");
 }
 
 // Store a newly created resource in storage.

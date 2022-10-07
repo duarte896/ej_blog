@@ -63,7 +63,7 @@ passport.deserializeUser(async function (id, done) {
   }
 });
 
-dbInitialSetup();
+// dbInitialSetup();
 
 app.get("/login", function (req, res) {
   res.render("login");
