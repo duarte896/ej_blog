@@ -45,3 +45,8 @@
     font-size: 48px;
   }
 }
+.articleInAdmin{
+  box-sizing: border-box;
+  max-width: 300px;
+  max-height: 100px;
+}
