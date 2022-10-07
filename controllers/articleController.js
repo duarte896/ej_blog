@@ -6,18 +6,18 @@ async function index(req, res) {}
 // Display the specified resource.
 async function show(req, res) {
   //get article by id
-  {
-    const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
 
-    const comments = await Comment.findAll({ where: { articleId: req.params.id }, include: User });
+  const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
 
-    // console.log(article.createdAt);
-    res.render("articles", {
-      article,
-      // user,
-      comments,
-    });
-  }
+  const comments = await Comment.findAll({ where: { articleId: req.params.id }, include: User });
+
+  // console.log(article.createdAt);
+  res.render("articles", {
+    article,
+    // user,
+    comments,
+    req,
+  });
 }
 
 // Show the form for creating a new resource
@@ -36,11 +36,11 @@ async function create(req, res) {
     });
 
     await Article.create({
-      title: fields.titulo,
-      content: fields.conteindo,
-      userId: userCreated.id,
+      title: fields.title,
+      content: fields.content,
+      userId: req.user.id,
+      image: files.image.newFilename,
     });
-    res.json(files);
   });
 }
 
@@ -80,8 +80,17 @@ async function edit(req, res) {
 }
 
 // Update the specified resource in storage.
-async function update(req, res) {}
+async function createArticle(req, res) {
+  return res.render("createArticle");
+}
 
+async function editArticle(req, res) {
+  const resultsArt = await Article.findByPk(req.params.id, { include: User });
+
+  res.render("editArticle", {
+    resultsArt,
+  });
+}
 // Remove the specified resource from storage.
 async function destroy(req, res) {
   await Article.destroy({
@@ -97,8 +106,9 @@ module.exports = {
   index,
   show,
   create,
+  createArticle,
   store,
   edit,
-  update,
   destroy,
+  editArticle,
 };
