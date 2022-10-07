@@ -36,20 +36,31 @@
           </tr>
         </thead>
         <tbody>
-          <% for( article of allArticles){if(article.user.email===req.user.email){ %>
+          <% for(const article of allArticles) {%>
           <tr>
-            <th scope="row"><%= article.id %></th>
+            <td><%= article.id %></td>
             <td><%= article.title %></td>
-            <td><%= article.content %></td>
-            <td><img src="/public/img/<%= article.image %>" alt="" /></td>
-            <td><%= article.createdAt %></td>
-            <td><%= article.user.firstname%> <%= article.user.lastname%></td>
-            <td>
-              <a href="/admin/editar/<%= article.id %> " class="btn btn-primary mb-2">Editar</a>
-              <a href="/admin/eliminar/<%= article.id %>" class="btn btn-danger">Eliminar</a>
+            <td class="list-content"><p><%= article.content %></p></td>
+            <td class="list-img">
+              <img src="img/<%= article.image %> " alt="" />
             </td>
+            <td><%= format(new Date(article.createdAt),"Pp",{locale: spanishLocale,}) %></td>
+            <td><%= article.user.firstname%> <%=article.user.lastname %></td>
+
+            <% if(user.id === article.user.id){%>
+            <td>
+              <a href="/admin/edit/<%=article.id%>" class="btn btn-primary">Editar</a>
+              <a href="/admin/destroy/<%=article.id%>" class="btn btn-danger">Eliminar</a>
+            </td>
+            <% } %> <% if(user.id !== article.user.id) { %>
+            <td>
+              <button class="btn btn-secondary">Editar</button>
+              <button class="btn btn-secondary">Eliminar</button>
+            </td>
+            <% } %>
           </tr>
-          <% } }%>
+
+          <%}%>
         </tbody>
       </table>
     </div>

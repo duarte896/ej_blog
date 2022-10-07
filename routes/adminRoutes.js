@@ -8,18 +8,18 @@ const { Article, User } = require("../models");
 // Rutas del Admin:
 // ...
 adminRouter.use(ensureAuthenticated);
-adminRouter.get("/admin", pagesControllers.showAdmin);
+adminRouter.get("/", pagesControllers.showAdmin);
 
-adminRouter.get("/admin/editar/:id", articleController.editArticle);
+adminRouter.get("/edit/:id", articleController.editArticle);
 
-adminRouter.get("/admin/eliminar/:id", articleController.destroy);
+adminRouter.get("/destroy/:id", articleController.destroy);
 
-adminRouter.post("/admin/articles/crear", articleController.create);
+adminRouter.post("/articles/crear", articleController.create);
 
-adminRouter.post("/admin/articles/:id", commentController.create);
+adminRouter.post("/articles/:id", commentController.create);
 
-adminRouter.post("/admin/editar/:id", articleController.edit);
+adminRouter.post("/edit/:id", articleController.edit);
 
-adminRouter.get("/admin/articles/crear", articleController.createArticle);
+adminRouter.get("/articles/crear", articleController.createArticle);
 
 module.exports = adminRouter;

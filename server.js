@@ -6,12 +6,12 @@ const dbInitialSetup = require("./dbInitialSetup");
 const APP_PORT = process.env.APP_PORT || 3000;
 const { User } = require("./models/index");
 const bcrypt = require("bcryptjs");
-const app = express();
-
+const flash = require("connect-flash");
 const session = require("express-session");
 const passport = require("passport");
 const LocalStrategy = require("passport-local");
 const ensureAuthenticated = require("./middlewares/ensureAuthenticated");
+const app = express();
 
 app.set("view engine", "ejs");
 app.use(express.static("public"));
@@ -24,6 +24,8 @@ app.use(
     saveUninitialized: false,
   }),
 );
+
+app.use(flash());
 
 app.use(passport.session());
 
@@ -39,7 +41,7 @@ passport.use(
     if (!user) {
       return done(null, false, { message: "Credenciales incorrectas" });
     }
-    const chequeoPassword = bcrypt.compare(password, user.password);
+    const chequeoPassword = await bcrypt.compare(password, user.password);
     if (!chequeoPassword) {
       return done(null, false, { message: "Credenciales incorrectas" });
     }
@@ -74,7 +76,7 @@ app.post(
   passport.authenticate("local", {
     successRedirect: "/admin",
     failureRedirect: "/login",
-    failureFlash: true,
+    // failureFlash: true,
   }),
 );
 // const usuario = await User.findOne({ where: { email: req.body.email } });
@@ -86,26 +88,6 @@ app.post(
 // } else {
 //   res.redirect("/login");
 // }
-
-app.get("/register", (req, res) => {
-  res.render("register");
-});
-
-app.post("/register", async (req, res) => {
-  const newUser = await User.create({
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
-    email: req.body.email,
-    password: req.body.password,
-  });
-  if (newUser.id !== null) {
-    req.login(newUser, () => {
-      res.redirect("/admin");
-    });
-  } else {
-    res.redirect("/register");
-  }
-});
 
 routes(app);
 app.get("/logout", function (req, res, next) {

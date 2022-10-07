@@ -4,10 +4,34 @@ const { User } = require("../models");
 async function index(req, res) {}
 
 // Display the specified resource.
-async function show(req, res) {}
+async function show(req, res) {
+  const userName = req.flash("user");
+  res.render("register", { userName });
+}
 
 // Show the form for creating a new resource
-async function create(req, res) {}
+async function create(req, res) {
+  const userAuthentication = await User.findOne({
+    where: { email: req.body.email },
+  });
+  if (!userAuthentication) {
+    const newUser = await User.create({
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      email: req.body.email,
+      password: req.body.password,
+    });
+
+    if (newUser) {
+      req.login(newUser, () => {
+        res.redirect("/admin");
+      });
+    }
+  } else {
+    req.flash("user", "Este usuario ya existe.");
+    res.redirect("back");
+  }
+}
 
 // Store a newly created resource in storage.
 async function store(req, res) {}
