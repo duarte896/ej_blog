@@ -45,7 +45,18 @@
     font-size: 48px;
   }
 }
-.articleInAdmin{
+.articleInAdmin {
   box-sizing: border-box;
   max-width: 300px;
+}
+
+.list-img img {
+  width: 10rem;
+}
+
+.list-content p {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
 }

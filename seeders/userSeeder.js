@@ -6,19 +6,16 @@ faker.locale = "es";
 module.exports = async () => {
   const users = [];
 
-  users.push({
-    firstname: "prueba",
-    lastname: "prueba",
-    email: "prueba@prueba",
-    password: "prueba",
-  });
-
   for (let i = 0; i < 10; i++) {
     users.push({
       firstname: faker.name.firstName(),
       lastname: faker.name.lastName(),
       email: faker.internet.email(),
-      password: "prueba",
+      password: "1234",
+      roleId: faker.datatype.number({
+        min: 1,
+        max: 4,
+      }),
     });
   }
 

@@ -12,27 +12,29 @@ const sequelize = new Sequelize(
 );
 
 // Async await????
-
+const Role = require("./Role")(sequelize, Model, DataTypes);
 const User = require("./User")(sequelize, Model, DataTypes);
 const Article = require("./Article")(sequelize, Model, DataTypes);
 const Comment = require("./Comment")(sequelize, Model, DataTypes);
 
 // Luego de definir los modelos, se pueden establecer relaciones
 // entre los mismos...
+User.belongsTo(Role);
 
 Article.belongsTo(User);
-User.hasMany(Article)
+User.hasMany(Article);
 
 Comment.belongsTo(User);
-User.hasMany(Comment)
+User.hasMany(Comment);
 
 Comment.belongsTo(Article);
-Article.hasMany(Comment)
-
+Article.hasMany(Comment);
 
 module.exports = {
   sequelize,
+  Role,
   User,
   Comment,
   Article,
 };
+
