@@ -1,4 +1,4 @@
-const { Article, User, Comment } = require("../models");
+const { Article, User, Comment, Role } = require("../models");
 const formidable = require("formidable");
 
 // Display a listing of the resource.
@@ -9,13 +9,14 @@ async function show(req, res) {
   //get article by id
 
   const article = await Article.findByPk(req.params.id, { include: [User, Comment] });
+  const user = await User.findByPk(req.params.id, { include: [Role] });
 
   const comments = await Comment.findAll({ where: { articleId: req.params.id }, include: User });
 
   // console.log(article.createdAt);
   res.render("articles", {
     article,
-    // user,
+    user,
     comments,
     req,
   });
@@ -84,7 +85,7 @@ async function editArticle(req, res) {
   const userId = req.user.dataValues.id;
   const article = await Article.findByPk(req.params.id, { include: "user" });
 
-  console.log(article.user.id);
+  //console.log(article.user.id);
   if (userId !== article.user.id) {
     return res.redirect("/admin");
   }

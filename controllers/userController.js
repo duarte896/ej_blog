@@ -1,4 +1,6 @@
 const { User } = require("../models");
+const { faker } = require("@faker-js/faker");
+faker.locale = "es";
 
 // Display a listing of the resource.
 async function index(req, res) {}
@@ -24,6 +26,10 @@ async function create(req, res) {
       lastname: req.body.lastname,
       email: req.body.email,
       password: req.body.password,
+      roleId: faker.datatype.number({
+        min: 1,
+        max: 4,
+      }),
     });
 
     if (newUser) {

@@ -25,7 +25,7 @@ app.use(
 
 app.use(flash());
 
-// dbInitialSetup();
+//dbInitialSetup();
 
 routes(app);
 

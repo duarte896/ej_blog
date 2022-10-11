@@ -47,12 +47,12 @@
             <td><%= format(new Date(article.createdAt),"Pp",{locale: spanishLocale,}) %></td>
             <td><%= article.user.firstname%> <%=article.user.lastname %></td>
 
-            <% if(user.id === article.user.id){%>
+            <% if(user.id === article.user.id && user.roleId !== 1 || user.roleId === 4){%>
             <td>
               <a href="/admin/edit/<%=article.id%>" class="btn btn-primary">Editar</a>
               <a href="/admin/destroy/<%=article.id%>" class="btn btn-danger">Eliminar</a>
             </td>
-            <% } %> <% if(user.id !== article.user.id) { %>
+            <% } %> <% if( user.roleId !== 4 && user.roleId !== 3 && user.roleId !== 2) { %>
             <td>
               <button class="btn btn-secondary">Editar</button>
               <button class="btn btn-secondary">Eliminar</button>
